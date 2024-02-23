@@ -1,6 +1,6 @@
 # shop_flutter
 
-flutter 电商项目
+flutter 电商项目 (wip)
 
 ## Getting Started
 
