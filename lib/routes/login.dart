@@ -16,7 +16,10 @@ class _LoginRouteState extends State<LoginRoute> {
 
   @override
   void initState() {
-    
+
     super.initState();
   }
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }

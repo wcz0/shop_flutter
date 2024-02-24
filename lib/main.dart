@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shop_flutter/routes/home.dart';
+import 'package:shop_flutter/routes/login.dart';
 
 // import 'l10n/localizations_intl.dart';
 // import 'package::flutter_localizations/flutter_localizations.dart';
@@ -32,10 +34,11 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      // home:,
+      home: HomeRoute(),
+      // 多语言配置
       // localizationsDelegates: const [
       //   GlobalMaterialLocalizations.delegate,
       //   GlobalWidgetsLocalizations.delegate,
@@ -44,6 +47,12 @@ class MyApp extends StatelessWidget {
       //   Locale('en', 'US'),
       //   Locale('zh', 'CN'),
       // ],
+      // 路由注册
+      routes: <String, WidgetBuilder>{
+        '/home': (context) => HomeRoute(),
+        '/my':(context) => LoginRoute(),
+        '/login':(context) => LoginRoute(),
+      }
     );
   }
 }
