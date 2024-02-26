@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:shop_flutter/routes/home.dart';
-import 'package:shop_flutter/routes/login.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_flutter/helper/routes.dart';
+import 'package:shop_flutter/pages/home/home.dart';
+import 'package:shop_flutter/pages/login.dart';
 
 // import 'l10n/localizations_intl.dart';
 // import 'package::flutter_localizations/flutter_localizations.dart';
@@ -16,43 +18,47 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Shop Flutter',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        useMaterial3: true,
+    return MultiProvider(
+      providers: [],
+      child: MaterialApp(
+        title: 'Shop Flutter',
+        theme: ThemeData(
+          // This is the theme of your application.
+          //
+          // TRY THIS: Try running your application with "flutter run". You'll see
+          // the application has a purple toolbar. Then, without quitting the app,
+          // try changing the seedColor in the colorScheme below to Colors.green
+          // and then invoke "hot reload" (save your changes or press the "hot
+          // reload" button in a Flutter-supported IDE, or press "r" if you used
+          // the command line to start the app).
+          //
+          // Notice that the counter didn't reset back to zero; the application
+          // state is not lost during the reload. To reset the state, use hot
+          // restart instead.
+          //
+          // This works for code too, not just values: Most code changes can be
+          // tested with just a hot reload.
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+          useMaterial3: true,
+        ),
+        // home: HomeRoute(),
+        // 多语言配置
+        // localizationsDelegates: const [
+        //   GlobalMaterialLocalizations.delegate,
+        //   GlobalWidgetsLocalizations.delegate,
+        // ],
+        // supportedLocales: const [
+        //   Locale('en', 'US'),
+        //   Locale('zh', 'CN'),
+        // ],
+        // 路由注册
+        // routes: {
+        //   '/': (context) => HomeRoute(),
+        //   '/profile':(context) => ProfileRoute(),
+        //   '/login':(context) => LoginRoute(),
+        // }
+        onGenerateRoute: Routes.onGenerateRoute,
       ),
-      home: HomeRoute(),
-      // 多语言配置
-      // localizationsDelegates: const [
-      //   GlobalMaterialLocalizations.delegate,
-      //   GlobalWidgetsLocalizations.delegate,
-      // ],
-      // supportedLocales: const [
-      //   Locale('en', 'US'),
-      //   Locale('zh', 'CN'),
-      // ],
-      // 路由注册
-      routes: <String, WidgetBuilder>{
-        '/home': (context) => HomeRoute(),
-        '/my':(context) => LoginRoute(),
-        '/login':(context) => LoginRoute(),
-      }
     );
   }
 }

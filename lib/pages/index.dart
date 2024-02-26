@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 
 class IndexRoute extends StatefulWidget {
+  const IndexRoute({super.key});
+
   @override
   // ignore: library_private_types_in_public_api
   _IndexState createState() => _IndexState();
