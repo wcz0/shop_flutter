@@ -3,16 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl_generator/generate_localized.dart';
 import 'package:shop_flutter/model/profile.dart';
+import 'package:shop_flutter/pages/login.dart';
 
 class HomeRoute extends StatefulWidget {
   int _selectdIndex = 0;
 
   final List<Widget> _pages = <Widget>[
-    HomeRoute(),
-    Category(),
-    Message(),
-    CartRoute(),
-    ProfileRoute(),
+    // HomeRoute(),
+    // Category(),
+    // Message(),
+    // CartRoute(),
+    // ProfileRoute(),
   ];
 
   @override
@@ -23,9 +24,6 @@ class _HomeRouteState extends State<HomeRoute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Shop'),
-        ),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           unselectedItemColor: Colors.grey[900],
@@ -57,12 +55,21 @@ class _HomeRouteState extends State<HomeRoute> {
               label: '我的',
             ),
           ],
-        ));
+        ),
+        body: ElevatedButton(
+            child: Text('登录页'),
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => LoginRoute()))));
   }
 }
 
+void test(context) {
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => LoginRoute()));
+}
+
 void _onItemTapped(int index) {
-  setState((){
+  setState(() {
     _selectdIndex = index;
-  })
+  });
 }

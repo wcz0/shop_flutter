@@ -5,6 +5,7 @@ class LoginRoute extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _LoginRouteState();
   }
+
 }
 
 class _LoginRouteState extends State<LoginRoute> {
@@ -16,10 +17,70 @@ class _LoginRouteState extends State<LoginRoute> {
 
   @override
   void initState() {
-
+    // TODO: 上次登录的手机号
     super.initState();
   }
 
   @override
-  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('登录'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: <Widget>[
+            TextFormField(
+              autofocus: _nameAutoFocus,
+              controller: _phoneController,
+              decoration: const InputDecoration(
+                labelText: '手机号',
+                hintText: '请输入手机号',
+                prefixIcon: Icon(Icons.person),
+              ),
+              onChanged: (v) {
+                setState(() {});
+              },
+              validator: (v) {
+                return v!.trim().isNotEmpty ? null : '手机号不能为空';
+              },
+            ),
+            TextFormField(
+              controller: _passwordController,
+              decoration: InputDecoration(
+                labelText: '密码',
+                hintText: '请输入密码',
+                prefixIcon: Icon(Icons.lock),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    pwdShow ? Icons.visibility : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      pwdShow = !pwdShow;
+                    });
+                  },
+                ),
+              ),
+              validator: (value) => value!.trim().isNotEmpty ? null : '密码不能为空',
+              obscureText: !pwdShow,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints.expand(height: 55.0),
+                child: const ElevatedButton(
+                  onPressed: _onLogin,
+                  child: Text('登录'),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
+
+void _onLogin() async {}

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+// import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_flutter/helper/routes.dart';
-import 'package:shop_flutter/pages/home/home.dart';
+import 'package:shop_flutter/pages/home/index.dart';
 import 'package:shop_flutter/pages/login.dart';
+import 'package:shop_flutter/state/cart.dart';
 
 // import 'l10n/localizations_intl.dart';
 // import 'package::flutter_localizations/flutter_localizations.dart';
@@ -19,7 +20,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [],
+      providers: [
+        ChangeNotifierProvider(create: (_) => CartState()),
+      ],
       child: MaterialApp(
         title: 'Shop Flutter',
         theme: ThemeData(
@@ -41,6 +44,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
           useMaterial3: true,
         ),
+        initialRoute: '/',
         // home: HomeRoute(),
         // 多语言配置
         // localizationsDelegates: const [
@@ -52,12 +56,12 @@ class MyApp extends StatelessWidget {
         //   Locale('zh', 'CN'),
         // ],
         // 路由注册
-        // routes: {
-        //   '/': (context) => HomeRoute(),
-        //   '/profile':(context) => ProfileRoute(),
-        //   '/login':(context) => LoginRoute(),
-        // }
-        onGenerateRoute: Routes.onGenerateRoute,
+        routes: {
+          '/': (context) => HomeRoute(),
+          // '/profile':(context) => ProfileRoute(),
+          '/login':(context) => LoginRoute(),
+        },
+        onGenerateRoute: Routes.onGenerateRoute
       ),
     );
   }
