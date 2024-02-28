@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_flutter/config/bootstrap.dart';
 import 'package:shop_flutter/config/routes.dart';
 import 'package:shop_flutter/state/cart.dart';
 
@@ -8,7 +9,7 @@ import 'package:shop_flutter/state/cart.dart';
 // import 'package::flutter_localizations/flutter_localizations.dart';
 
 void main() {
-  runApp(const MyApp());
+  Bootstrap.init().then((value) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -23,24 +24,25 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp.router(
         title: 'Shop Flutter',
-        theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // TRY THIS: Try running your application with "flutter run". You'll see
-          // the application has a purple toolbar. Then, without quitting the app,
-          // try changing the seedColor in the colorScheme below to Colors.green
-          // and then invoke "hot reload" (save your changes or press the "hot
-          // reload" button in a Flutter-supported IDE, or press "r" if you used
-          // the command line to start the app).
-          //
-          // Notice that the counter didn't reset back to zero; the application
-          // state is not lost during the reload. To reset the state, use hot
-          // restart instead.
-          //
-          // This works for code too, not just values: Most code changes can be
-          // tested with just a hot reload.
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+        themeMode: ThemeMode.system,
+        theme: ThemeData.light(
           useMaterial3: true,
+        ).copyWith(
+          primaryColor: Colors.blue,
+          textTheme: ThemeData.light(
+          ).textTheme.apply(
+            bodyColor: Colors.black,
+            displayColor: Colors.blue,
+          ),
+        ),
+        darkTheme: ThemeData.dark(
+          useMaterial3: true,
+        ).copyWith(
+          primaryColor: Colors.blue,
+          textTheme:  ThemeData.dark().textTheme.apply(
+            bodyColor: Colors.white,
+            displayColor: Colors.blue,
+          ),
         ),
         // 多语言配置
         // localizationsDelegates: const [

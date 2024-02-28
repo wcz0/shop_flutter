@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shop_flutter/config/bootstrap.dart';
 
 class Api {
   Api([this.context]) {
@@ -17,8 +20,10 @@ class Api {
   static void init() async {
     // TODO: 网络存储
     // dio.interceptors.add
-    final prefs = await SharedPreferences.getInstance();
 
-    final token = prefs.getString('token');
+    final token = Bootstrap.prefs.getString('token');
+    if (token != null) {
+      dio.options.headers[HttpHeaders.authorizationHeader] = 'Bearer $token';
+    }
   }
 }

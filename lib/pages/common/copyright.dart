@@ -4,18 +4,19 @@ import 'package:url_launcher/url_launcher.dart';
 
 Widget buildCopyRight() {
   return Container(
-    padding: const EdgeInsets.all(16),
+    // padding: const EdgeInsets.all(16),
     alignment: Alignment.center,
     child: RichText(
       text: TextSpan(children: [
         const TextSpan(
             text: '© 2024 wcz0',
             style: TextStyle(
-              color: Colors.black,
-              fontSize: 14,
+              color: Colors.grey,
+              fontSize: 8,
             )),
         TextSpan(
           text: 'Github link',
+          style: const TextStyle(color: Colors.grey, fontSize: 8),
           recognizer: TapGestureRecognizer()
             ..onTap = () {
               _launchUrl('https://github.com/wcz0/shop_flutter');

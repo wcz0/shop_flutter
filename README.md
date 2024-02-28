@@ -2,15 +2,18 @@
 
 flutter 电商项目 (wip)
 
-## Getting Started
+## 后端
 
-This project is a starting point for a Flutter application.
+使用 crmbe 基础版 api
 
-A few resources to get you started if this is your first Flutter project:
+## 功能
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- 基础骨架 ✔︎
+- 个人页面 ✖︎
+- 首页 ✖︎
+  - 商品页面 ✖︎
+- 分类 ✖︎
+- 消息 (api 未开发) ✖︎
+- 购物车 ✖︎
+- 我的 ✖︎
+- 登录 ✖︎

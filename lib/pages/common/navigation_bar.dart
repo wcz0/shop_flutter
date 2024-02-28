@@ -3,14 +3,15 @@ import 'package:go_router/go_router.dart';
 import 'package:shop_flutter/enum/navigation.dart';
 
 Widget buildNavigationBar(BuildContext context, int index) {
+  var nowIndex = index;
   return BottomNavigationBar(
     type: BottomNavigationBarType.fixed,
-    unselectedItemColor: Colors.grey[900],
-    selectedItemColor: Colors.blue,
+    // unselectedItemColor: Colors.grey[900],
+    selectedItemColor: Theme.of(context).primaryColor,
     unselectedFontSize: 11,
     selectedFontSize: 11,
     currentIndex: index,
-    onTap: (index) => _onItemTapped(context, index),
+    onTap: (index) => _onItemTapped(context, index, nowIndex),
     items: const [
       BottomNavigationBarItem(
         icon: Icon(Icons.home),
@@ -36,7 +37,9 @@ Widget buildNavigationBar(BuildContext context, int index) {
   );
 }
 
-void _onItemTapped(BuildContext context, int index) {
-  final navigation = NavigationEnum.parse(index);
-  context.go(navigation.path);
+void _onItemTapped(BuildContext context, int index, int nowIndex) {
+  if (index != nowIndex) {
+    final navigation = NavigationEnum.parse(index);
+    GoRouter.of(context).push(navigation.path);
+  }
 }

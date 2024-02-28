@@ -5,7 +5,6 @@ class LoginRoute extends StatefulWidget {
   State createState() {
     return _LoginRouteState();
   }
-
 }
 
 class _LoginRouteState extends State<LoginRoute> {
@@ -25,7 +24,7 @@ class _LoginRouteState extends State<LoginRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('登录'),
+        title: null,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -76,6 +75,17 @@ class _LoginRouteState extends State<LoginRoute> {
                 ),
               ),
             ),
+            const Padding(
+              padding: EdgeInsets.only(top: 15),
+              child: TextButton(
+                onPressed: _switchPasswordLogin,
+                child: Text('账号登录',
+                  style: TextStyle(
+                    color: Color.fromARGB(255, 147, 147, 147),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
@@ -84,3 +94,5 @@ class _LoginRouteState extends State<LoginRoute> {
 }
 
 void _onLogin() async {}
+
+void _switchPasswordLogin() {}
