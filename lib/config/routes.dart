@@ -8,7 +8,8 @@ import '../../pages/profile/index.dart';
 
 class RoutesConfig {
   final router = GoRouter(
-    initialLocation: NavigationEnum.home.path,
+    // initialLocation: NavigationEnum.home.path,
+    initialLocation: '/login',
     routes: [
     GoRoute(
       name: NavigationEnum.home.label,

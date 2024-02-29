@@ -21,7 +21,7 @@ class Api {
     // TODO: 网络存储
     // dio.interceptors.add
 
-    final token = Bootstrap.prefs.getString('token');
+    final token = Bootstrap.prefs!.getString('token');
     if (token != null) {
       dio.options.headers[HttpHeaders.authorizationHeader] = 'Bearer $token';
     }
