@@ -9,6 +9,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class LoginRoute extends StatefulWidget {
+  const LoginRoute({super.key});
+
   @override
   State createState() {
     return _LoginRouteState();
@@ -17,9 +19,12 @@ class LoginRoute extends StatefulWidget {
 
 class _LoginRouteState extends State<LoginRoute> {
   GlobalKey<FormFieldState> phoneKey = GlobalKey<FormFieldState>();
-  TextEditingController _phoneController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _codeController = TextEditingController();
+  GlobalKey<FormFieldState> passwordKey = GlobalKey<FormFieldState>();
+  GlobalKey<FormFieldState> codeKey = GlobalKey<FormFieldState>();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _codeController = TextEditingController();
+  String buttonLabel = '账号登录';
   bool pwdShow = false;
   bool checkBox = false;
   bool codeControllerVisible = true;
@@ -102,7 +107,6 @@ class _LoginRouteState extends State<LoginRoute> {
                     labelText: '验证码',
                     hintText: '请输入验证码',
                     prefixIcon: const Icon(Icons.message),
-                    // suffixIcon: Icon(Icons.refresh),
                     suffixIcon: TextButton(
                       onPressed: () => sendCode(context),
                       child: const Text('验证码'),
@@ -125,10 +129,10 @@ class _LoginRouteState extends State<LoginRoute> {
               Padding(
                 padding: const EdgeInsets.only(top: 15),
                 child: TextButton(
-                  onPressed: () => switchPasswordLogin,
-                  child: const Text(
-                    '账号登录',
-                    style: TextStyle(
+                  onPressed: () => switchPasswordLogin(context),
+                  child: Text(
+                    buttonLabel,
+                    style: const TextStyle(
                       color: Color.fromARGB(255, 147, 147, 147),
                     ),
                   ),
@@ -189,39 +193,53 @@ class _LoginRouteState extends State<LoginRoute> {
   void onLogin(context) {
     checkBoxValue(context);
     // TODO: 登录请求
+    if (buttonLabel == '账号登录') {
+      loginByPassword();
+    } else {
+      loginByCode();
+    }
     Bootstrap.prefs!.setString('last-phone', _phoneController.text);
   }
 
-  void switchPasswordLogin() {}
+  void loginByPassword() {
+    if (!phoneKey.currentState!.validate()) {
+      return;
+    }
+    if (!passwordKey.currentState!.validate()) {
+      return;
+    }
+  }
+
+  void loginByCode() {
+    if (!phoneKey.currentState!.validate()) {
+      return;
+    }
+    if (!codeKey.currentState!.validate()) {
+      return;
+    }
+    
+  }
+
+  void switchPasswordLogin(BuildContext context) {
+    setState(() {
+      codeControllerVisible = !codeControllerVisible;
+      passwordControllerVisible = !passwordControllerVisible;
+      buttonLabel = codeControllerVisible ? '账号登录' : '验证码登录';
+      build(context);
+    });
+  }
 
   WebViewController webview = WebViewController()
     ..loadRequest(Uri.parse('https://v5.crmeb.net/pages/users/login/index'))
-    ..setJavaScriptMode(JavaScriptMode.unrestricted)
-    ..setOnConsoleMessage((message) { runJavaScript(message);})
-
-
-  //   ..runJavaScript('''
-  //     // alert('hello');
-  //     var dis = document.querySelectorAll('*');
-  //     for (const i of dis) {
-  //       i.style.display = 'none';
-  //     }
-  //     alert('hello');
-  //     var input = document.getElementsByClassName('uni-input-input')[0];
-  //     input.value = '18889288054';
-  //     input.dispatchEvent(new Event('input'));
-  //     document.getElementsByClassName('uni-checkbox-input')[0].click();
-  //     document.getElementsByTagName('uni-button')[0].click()
-  // ''');
+    ..setJavaScriptMode(JavaScriptMode.unrestricted);
 
   void sendCode(BuildContext context) {
-    // if (!checkBoxValue(context)) {
-    //   return;
-    // }
-    // if (!phoneKey.currentState!.validate()) {
-    //   return;
-    // }
-    // launchUrl(Uri.parse("https://v5.crmeb.net/pages/users/login/index"));
+    if (!checkBoxValue(context)) {
+      return;
+    }
+    if (!phoneKey.currentState!.validate()) {
+      return;
+    }
     showDialog(
         context: context,
         builder: (context) {
@@ -248,6 +266,22 @@ class _LoginRouteState extends State<LoginRoute> {
             ),
           );
         });
+
+    double width = MediaQuery.of(context).size.width;
+    int htmlWidth = (width * 8 ~/ 10).toInt();
+    webview.runJavaScript('''
+      var v = document.getElementsByClassName('verifybox')[0];
+      v.style.maxWidth = '${htmlWidth}px';
+      var img = document.getElementsByClassName('verify-image-panel')[0];
+      img.style = '${htmlWidth}px; height: 155px; margin-bottom: 5px;';
+      var bar = document.getElementsByClassName('verify-bar-area')[0];
+      bar.style = 'width: ${htmlWidth - 25}px; color: rgb(0, 0, 0); border-color: rgb(221, 221, 221); line-height: 40px';
+      var input = document.getElementsByClassName('uni-input-input')[0];
+      input.value = '${_phoneController.text}';
+      input.dispatchEvent(new Event('input'));
+      document.getElementsByClassName('uni-checkbox-input')[0].click();
+      document.getElementsByTagName('uni-button')[0].click()
+    ''');
   }
 
   bool checkBoxValue(BuildContext context) {
