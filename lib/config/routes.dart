@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shop_flutter/config/bootstrap.dart';
 import 'package:shop_flutter/enum/navigation.dart';
 import '../../pages/home/index.dart';
 import '../../pages/login.dart';
@@ -8,8 +9,9 @@ import '../../pages/profile/index.dart';
 
 class RoutesConfig {
   final router = GoRouter(
-    // initialLocation: NavigationEnum.home.path,
-    initialLocation: '/login',
+    initialLocation: NavigationEnum.home.path,
+    // Test Route
+    // initialLocation: '/login',
     routes: [
     GoRoute(
       name: NavigationEnum.home.label,
@@ -31,8 +33,7 @@ class RoutesConfig {
 }
 
 Future<String?> _checkAuth(BuildContext context, GoRouterState state) async {
-  final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final String? token = prefs.getString('token');
+  final String? token = Bootstrap.prefs!.getString('token');
   if (token == null) {
     return '/login';
   }

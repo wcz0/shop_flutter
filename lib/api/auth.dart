@@ -1,9 +1,17 @@
-import 'package:shop_flutter/api/base.dart';
-import 'package:shop_flutter/model/user.dart';
+import 'package:dio/dio.dart';
+import 'package:shop_flutter/config/dio.dart';
 
-class AuthApi extends Api{
+Future<Response> byPasswordLogin(String username, String password) async {
+  return Api.dio.post('/login', data: {
+    'username': username,
+    'password': password,
+  });
+}
 
-  Future<UserModel> login(){
-    return dio.post('/auth/login');
-  }
+
+Future<Response> byCodeLogin(String phone, String code) async {
+  return Api.dio.post('/login/mobile', data: {
+    'phone': phone,
+    'code': code,
+  });
 }

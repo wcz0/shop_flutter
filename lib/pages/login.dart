@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shop_flutter/api/auth.dart';
 import 'package:shop_flutter/config/bootstrap.dart';
 import 'package:shop_flutter/pages/common/copyright.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -24,11 +23,13 @@ class _LoginRouteState extends State<LoginRoute> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _codeController = TextEditingController();
-  String buttonLabel = '账号登录';
-  bool pwdShow = false;
-  bool checkBox = false;
-  bool codeControllerVisible = true;
-  bool passwordControllerVisible = false;
+  OverlayEntry? _overlayEntry;
+  String _buttonLabel = '账号登录';
+  bool _pwdShow = false;
+  bool _checkBox = false;
+  bool _codeControllerVisible = true;
+  bool _passwordControllerVisible = false;
+  bool _loginButtonDisabled = false;
 
   @override
   void initState() {
@@ -37,6 +38,11 @@ class _LoginRouteState extends State<LoginRoute> {
     if (phone != null) {
       _phoneController.text = phone;
     }
+    _overlayEntry = OverlayEntry(
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
   }
 
   @override
@@ -50,6 +56,8 @@ class _LoginRouteState extends State<LoginRoute> {
         child: Form(
           child: Column(
             children: <Widget>[
+              // if (_overlayEntry != null)
+              //   _overlayEntry?.builder(context) as Widget,
               TextFormField(
                 key: phoneKey,
                 autofocus: true,
@@ -76,8 +84,9 @@ class _LoginRouteState extends State<LoginRoute> {
                 },
               ),
               Visibility(
-                visible: passwordControllerVisible,
+                visible: _passwordControllerVisible,
                 child: TextFormField(
+                  key: passwordKey,
                   controller: _passwordController,
                   decoration: InputDecoration(
                     labelText: '密码',
@@ -85,23 +94,24 @@ class _LoginRouteState extends State<LoginRoute> {
                     prefixIcon: const Icon(Icons.lock),
                     suffixIcon: IconButton(
                       icon: Icon(
-                        pwdShow ? Icons.visibility : Icons.visibility_off,
+                        _pwdShow ? Icons.visibility : Icons.visibility_off,
                       ),
                       onPressed: () {
                         setState(() {
-                          pwdShow = !pwdShow;
+                          _pwdShow = !_pwdShow;
                         });
                       },
                     ),
                   ),
                   validator: (value) =>
                       value!.trim().isNotEmpty ? null : '密码不能为空',
-                  obscureText: !pwdShow,
+                  obscureText: !_pwdShow,
                 ),
               ),
               Visibility(
-                visible: codeControllerVisible,
+                visible: _codeControllerVisible,
                 child: TextFormField(
+                  key: codeKey,
                   controller: _codeController,
                   decoration: InputDecoration(
                     labelText: '验证码',
@@ -121,7 +131,8 @@ class _LoginRouteState extends State<LoginRoute> {
                 child: ConstrainedBox(
                   constraints: const BoxConstraints.expand(height: 55.0),
                   child: ElevatedButton(
-                    onPressed: () => onLogin(context),
+                    onPressed:
+                        _loginButtonDisabled ? null : () => _onLogin(context),
                     child: const Text('登录'),
                   ),
                 ),
@@ -131,7 +142,7 @@ class _LoginRouteState extends State<LoginRoute> {
                 child: TextButton(
                   onPressed: () => switchPasswordLogin(context),
                   child: Text(
-                    buttonLabel,
+                    _buttonLabel,
                     style: const TextStyle(
                       color: Color.fromARGB(255, 147, 147, 147),
                     ),
@@ -140,10 +151,10 @@ class _LoginRouteState extends State<LoginRoute> {
               ),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Checkbox(
-                  value: checkBox,
+                  value: _checkBox,
                   onChanged: (bool? value) {
                     setState(() {
-                      checkBox = value!;
+                      _checkBox = value!;
                     });
                   },
                 ),
@@ -186,45 +197,63 @@ class _LoginRouteState extends State<LoginRoute> {
     );
   }
 
-  void onChanged(bool value) {
-    checkBox = value;
-  }
-
-  void onLogin(context) {
+  void _onLogin(BuildContext context) async {
     checkBoxValue(context);
-    // TODO: 登录请求
-    if (buttonLabel == '账号登录') {
-      loginByPassword();
+    _showLoading();
+
+    setState(() {
+      _loginButtonDisabled = true;
+    });
+    if (_buttonLabel != '账号登录') {
+      await _loginByPassword();
     } else {
-      loginByCode();
+      await _loginByCode();
     }
+    setState(() {
+      _loginButtonDisabled = false;
+    });
+    _hideLoading();
     Bootstrap.prefs!.setString('last-phone', _phoneController.text);
   }
 
-  void loginByPassword() {
+  Future<void> _loginByPassword() async {
     if (!phoneKey.currentState!.validate()) {
       return;
     }
     if (!passwordKey.currentState!.validate()) {
       return;
     }
+    var r =
+        await byPasswordLogin(_phoneController.text, _passwordController.text);
+    _loginProcess(r);
   }
 
-  void loginByCode() {
+  _loginProcess(r) {
+    if (r.data['status'] == 200) {
+      Bootstrap.prefs!.setString('token', r.data['data']['token']);
+      GoRouter.of(context).pop();
+    }
+    if (r.data['status'] == 400) {
+      _scaffoldMessenger(r.data['msg']);
+    }
+  }
+
+  Future<void> _loginByCode() async {
     if (!phoneKey.currentState!.validate()) {
       return;
     }
     if (!codeKey.currentState!.validate()) {
       return;
     }
-    
+    var r = await byCodeLogin(_phoneController.text, _codeController.text);
+    _loginProcess(r);
   }
 
   void switchPasswordLogin(BuildContext context) {
     setState(() {
-      codeControllerVisible = !codeControllerVisible;
-      passwordControllerVisible = !passwordControllerVisible;
-      buttonLabel = codeControllerVisible ? '账号登录' : '验证码登录';
+      _codeControllerVisible = !_codeControllerVisible;
+      _passwordControllerVisible = !_passwordControllerVisible;
+      _buttonLabel = _codeControllerVisible ? '账号登录' : '验证码登录';
       build(context);
     });
   }
@@ -285,14 +314,31 @@ class _LoginRouteState extends State<LoginRoute> {
   }
 
   bool checkBoxValue(BuildContext context) {
-    if (!checkBox) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('请先同意用户协议和隐私协议'),
-        ),
-      );
+    if (!_checkBox) {
+      _scaffoldMessenger('请先同意用户协议和隐私协议');
       return false;
     }
     return true;
+  }
+
+  void _showLoading() {
+    setState(() {
+      Overlay.of(context).insert(_overlayEntry!);
+    });
+  }
+
+  void _hideLoading() {
+    setState(() {
+      _overlayEntry!.remove();
+    });
+  }
+
+  _scaffoldMessenger(String msg) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(msg),
+      ),
+    );
   }
 }
