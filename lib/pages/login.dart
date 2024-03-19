@@ -51,146 +51,149 @@ class _LoginRouteState extends State<LoginRoute> {
       appBar: AppBar(
         title: null,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Form(
-          child: Column(
-            children: <Widget>[
-              // if (_overlayEntry != null)
-              //   _overlayEntry?.builder(context) as Widget,
-              TextFormField(
-                key: phoneKey,
-                autofocus: true,
-                controller: _phoneController,
-                decoration: const InputDecoration(
-                  labelText: '手机号',
-                  hintText: '请输入手机号',
-                  prefixIcon: Icon(Icons.person),
-                ),
-                onChanged: (v) {
-                  setState(() {});
-                },
-                validator: (v) {
-                  final RegExp phoneRegex = RegExp(r'^1[0-9]{10}$');
-                  // 去除首尾空格后判断是否为空
-                  if (v!.trim().isEmpty) {
-                    return '手机号不能为空';
-                  }
-                  // 判断是否符合手机号格式
-                  if (!phoneRegex.hasMatch(v)) {
-                    return '请输入有效的手机号';
-                  }
-                  return null;
-                },
-              ),
-              Visibility(
-                visible: _passwordControllerVisible,
-                child: TextFormField(
-                  key: passwordKey,
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    labelText: '密码',
-                    hintText: '请输入密码',
-                    prefixIcon: const Icon(Icons.lock),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _pwdShow ? Icons.visibility : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _pwdShow = !_pwdShow;
-                        });
-                      },
-                    ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            child: Column(
+              children: <Widget>[
+                // if (_overlayEntry != null)
+                //   _overlayEntry?.builder(context) as Widget,
+                TextFormField(
+                  key: phoneKey,
+                  autofocus: true,
+                  controller: _phoneController,
+                  decoration: const InputDecoration(
+                    labelText: '手机号',
+                    hintText: '请输入手机号',
+                    prefixIcon: Icon(Icons.person),
                   ),
-                  validator: (value) =>
-                      value!.trim().isNotEmpty ? null : '密码不能为空',
-                  obscureText: !_pwdShow,
-                ),
-              ),
-              Visibility(
-                visible: _codeControllerVisible,
-                child: TextFormField(
-                  key: codeKey,
-                  controller: _codeController,
-                  decoration: InputDecoration(
-                    labelText: '验证码',
-                    hintText: '请输入验证码',
-                    prefixIcon: const Icon(Icons.message),
-                    suffixIcon: TextButton(
-                      onPressed: () => sendCode(context),
-                      child: const Text('验证码'),
-                    ),
-                  ),
-                  validator: (value) =>
-                      value!.trim().isNotEmpty ? null : '验证码不能为空',
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints.expand(height: 55.0),
-                  child: ElevatedButton(
-                    onPressed:
-                        _loginButtonDisabled ? null : () => _onLogin(context),
-                    child: const Text('登录'),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 15),
-                child: TextButton(
-                  onPressed: () => switchPasswordLogin(context),
-                  child: Text(
-                    _buttonLabel,
-                    style: const TextStyle(
-                      color: Color.fromARGB(255, 147, 147, 147),
-                    ),
-                  ),
-                ),
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Checkbox(
-                  value: _checkBox,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      _checkBox = value!;
-                    });
+                  onChanged: (v) {
+                    setState(() {});
+                  },
+                  validator: (v) {
+                    final RegExp phoneRegex = RegExp(r'^1[0-9]{10}$');
+                    // 去除首尾空格后判断是否为空
+                    if (v!.trim().isEmpty) {
+                      return '手机号不能为空';
+                    }
+                    // 判断是否符合手机号格式
+                    if (!phoneRegex.hasMatch(v)) {
+                      return '请输入有效的手机号';
+                    }
+                    return null;
                   },
                 ),
-                RichText(
-                  text: TextSpan(
-                      style: const TextStyle(color: Colors.grey, fontSize: 12),
-                      children: [
-                        const TextSpan(
-                          text: '已阅读并同意',
+                Visibility(
+                  visible: _passwordControllerVisible,
+                  child: TextFormField(
+                    key: passwordKey,
+                    controller: _passwordController,
+                    decoration: InputDecoration(
+                      labelText: '密码',
+                      hintText: '请输入密码',
+                      prefixIcon: const Icon(Icons.lock),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _pwdShow ? Icons.visibility : Icons.visibility_off,
                         ),
-                        TextSpan(
-                          text: '《用户协议》',
-                          style:
-                              TextStyle(color: Theme.of(context).primaryColor),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              launchUrl(Uri.parse(
-                                  'https://v5.crmeb.net/pages/users/privacy/index?type=4'));
-                            },
-                        ),
-                        const TextSpan(text: '和'),
-                        TextSpan(
-                          text: '《隐私协议》',
-                          style:
-                              TextStyle(color: Theme.of(context).primaryColor),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              launchUrl(Uri.parse(
-                                  'https://v5.crmeb.net/pages/users/privacy/index?type=3'));
-                            },
-                        ),
-                      ]),
+                        onPressed: () {
+                          setState(() {
+                            _pwdShow = !_pwdShow;
+                          });
+                        },
+                      ),
+                    ),
+                    validator: (value) =>
+                        value!.trim().isNotEmpty ? null : '密码不能为空',
+                    obscureText: !_pwdShow,
+                  ),
                 ),
-              ]),
-              ...buildCopyRight(),
-            ],
+                Visibility(
+                  visible: _codeControllerVisible,
+                  child: TextFormField(
+                    key: codeKey,
+                    controller: _codeController,
+                    decoration: InputDecoration(
+                      labelText: '验证码',
+                      hintText: '请输入验证码',
+                      prefixIcon: const Icon(Icons.message),
+                      suffixIcon: TextButton(
+                        onPressed: () => sendCode(context),
+                        child: const Text('验证码'),
+                      ),
+                    ),
+                    validator: (value) =>
+                        value!.trim().isNotEmpty ? null : '验证码不能为空',
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints.expand(height: 55.0),
+                    child: ElevatedButton(
+                      onPressed:
+                          _loginButtonDisabled ? null : () => _onLogin(context),
+                      child: const Text('登录'),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: TextButton(
+                    onPressed: () => switchPasswordLogin(context),
+                    child: Text(
+                      _buttonLabel,
+                      style: const TextStyle(
+                        color: Color.fromARGB(255, 147, 147, 147),
+                      ),
+                    ),
+                  ),
+                ),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Checkbox(
+                    value: _checkBox,
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _checkBox = value!;
+                      });
+                    },
+                  ),
+                  RichText(
+                    text: TextSpan(
+                        style:
+                            const TextStyle(color: Colors.grey, fontSize: 12),
+                        children: [
+                          const TextSpan(
+                            text: '已阅读并同意',
+                          ),
+                          TextSpan(
+                            text: '《用户协议》',
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                launchUrl(Uri.parse(
+                                    'https://v5.crmeb.net/pages/users/privacy/index?type=4'));
+                              },
+                          ),
+                          const TextSpan(text: '和'),
+                          TextSpan(
+                            text: '《隐私协议》',
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                launchUrl(Uri.parse(
+                                    'https://v5.crmeb.net/pages/users/privacy/index?type=3'));
+                              },
+                          ),
+                        ]),
+                  ),
+                ]),
+                ...buildCopyRight(),
+              ],
+            ),
           ),
         ),
       ),
@@ -198,7 +201,7 @@ class _LoginRouteState extends State<LoginRoute> {
   }
 
   void _onLogin(BuildContext context) async {
-    checkBoxValue(context);
+    if (!checkBoxValue()) return;
     _showLoading();
 
     setState(() {
@@ -263,7 +266,7 @@ class _LoginRouteState extends State<LoginRoute> {
     ..setJavaScriptMode(JavaScriptMode.unrestricted);
 
   void sendCode(BuildContext context) {
-    if (!checkBoxValue(context)) {
+    if (!checkBoxValue()) {
       return;
     }
     if (!phoneKey.currentState!.validate()) {
@@ -313,7 +316,7 @@ class _LoginRouteState extends State<LoginRoute> {
     ''');
   }
 
-  bool checkBoxValue(BuildContext context) {
+  bool checkBoxValue() {
     if (!_checkBox) {
       _scaffoldMessenger('请先同意用户协议和隐私协议');
       return false;

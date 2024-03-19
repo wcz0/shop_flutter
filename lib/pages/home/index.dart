@@ -18,10 +18,21 @@ class _HomeRouteState extends State<HomeRoute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: buildNavigationBar(context, navigation.index),
-        body: ElevatedButton(
-            child: const Text('登录页'),
-            onPressed: () => GoRouter.of(context).push('/login')));
+      bottomNavigationBar: buildNavigationBar(context, navigation.index),
+      body: SafeArea(
+        child: ListView(
+          prototypeItem: Column(
+            children: <Widget>[
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () => test(context),
+                child: const Text('Login'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 

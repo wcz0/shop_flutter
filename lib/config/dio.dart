@@ -15,8 +15,6 @@ class Api {
     //   InterceptorsWrapper(
     //     onRequest: (options, handler) {
     //       print('请求拦截');
-    //       print(options.uri);
-    //       print(options.baseUrl);
     //       return handler.next(options);
     //     },
     //     onResponse: (response, handler) {

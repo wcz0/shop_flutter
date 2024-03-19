@@ -12,6 +12,6 @@ Future<Response> byPasswordLogin(String username, String password) async {
 Future<Response> byCodeLogin(String phone, String code) async {
   return Api.dio.post('/login/mobile', data: {
     'phone': phone,
-    'code': code,
+    'captcha': code,
   });
 }

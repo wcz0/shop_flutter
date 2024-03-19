@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:shop_flutter/model/user.dart';
 
 part 'product_info.g.dart';
 
