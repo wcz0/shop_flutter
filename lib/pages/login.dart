@@ -200,6 +200,7 @@ class _LoginRouteState extends State<LoginRoute> {
     );
   }
 
+// 登录
   void _onLogin(BuildContext context) async {
     if (!checkBoxValue()) return;
     _showLoading();
@@ -219,6 +220,7 @@ class _LoginRouteState extends State<LoginRoute> {
     Bootstrap.prefs!.setString('last-phone', _phoneController.text);
   }
 
+// 密码登录
   Future<void> _loginByPassword() async {
     if (!phoneKey.currentState!.validate()) {
       return;
@@ -231,6 +233,7 @@ class _LoginRouteState extends State<LoginRoute> {
     _loginProcess(r);
   }
 
+// 登录处理
   _loginProcess(r) {
     if (r.data['status'] == 200) {
       Bootstrap.prefs!.setString('token', r.data['data']['token']);
@@ -241,6 +244,7 @@ class _LoginRouteState extends State<LoginRoute> {
     }
   }
 
+// 验证码登录
   Future<void> _loginByCode() async {
     if (!phoneKey.currentState!.validate()) {
       return;
@@ -265,6 +269,7 @@ class _LoginRouteState extends State<LoginRoute> {
     ..loadRequest(Uri.parse('https://v5.crmeb.net/pages/users/login/index'))
     ..setJavaScriptMode(JavaScriptMode.unrestricted);
 
+// 发送验证码
   void sendCode(BuildContext context) {
     if (!checkBoxValue()) {
       return;

@@ -33,12 +33,12 @@ class RoutesConfig {
         path: NavigationEnum.category.path,
         builder: (context, state) => const ProfileRoute(),
       ),
-      GoRoute(
-        name: NavigationEnum.message.label,
-        path: NavigationEnum.message.path,
-        builder: (context, state) => const ProfileRoute(),
-        redirect: (context, state) => _checkAuth(context, state),
-      ),
+      // GoRoute(
+      //   name: NavigationEnum.message.label,
+      //   path: NavigationEnum.message.path,
+      //   builder: (context, state) => const ProfileRoute(),
+      //   redirect: (context, state) => _checkAuth(context, state),
+      // ),
       GoRoute(
         name: NavigationEnum.cart.label,
         path: NavigationEnum.cart.path,

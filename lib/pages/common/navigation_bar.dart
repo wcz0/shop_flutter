@@ -21,10 +21,10 @@ Widget buildNavigationBar(BuildContext context, int index) {
         icon: Icon(Icons.category),
         label: '分类',
       ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.message),
-        label: '消息',
-      ),
+      // BottomNavigationBarItem(
+      //   icon: Icon(Icons.message),
+      //   label: '消息',
+      // ),
       BottomNavigationBarItem(
         icon: Icon(Icons.shopify_sharp),
         label: '购物车',
