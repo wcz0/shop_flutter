@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
-import 'package:shop_flutter/enum/navigation.dart';
-import 'package:shop_flutter/pages/login.dart';
-import 'package:shop_flutter/pages/common/navigation_bar.dart';
+import 'package:shop_flutter/flavors/navigation.dart';
+import 'package:shop_flutter/app/modules/other/login.dart';
+import 'package:shop_flutter/app/modules/common/navigation_bar.dart';
 
 class HomeRoute extends StatefulWidget {
   const HomeRoute({super.key});

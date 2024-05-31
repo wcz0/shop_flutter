@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shop_flutter/api/auth.dart';
 import 'package:shop_flutter/config/bootstrap.dart';
-import 'package:shop_flutter/pages/common/copyright.dart';
+import 'package:shop_flutter/app/modules/common/copyright.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
