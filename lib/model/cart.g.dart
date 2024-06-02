@@ -7,32 +7,32 @@ part of 'cart.dart';
 // **************************************************************************
 
 CartModel _$CartModelFromJson(Map<String, dynamic> json) => CartModel()
-  ..id = json['id'] as int?
-  ..uid = json['uid'] as int?
+  ..id = (json['id'] as num?)?.toInt()
+  ..uid = (json['uid'] as num?)?.toInt()
   ..type = json['type'] as String?
-  ..productId = json['productId'] as int?
+  ..productId = (json['productId'] as num?)?.toInt()
   ..productAttrUnique = json['productAttrUnique'] as String?
-  ..cartNum = json['cartNum'] as int?
-  ..addTime = json['addTime'] as int?
-  ..isPay = json['isPay'] as int?
-  ..isDel = json['isDel'] as int?
-  ..isNew = json['isNew'] as int?
-  ..combinationId = json['combinationId'] as int?
-  ..seckillId = json['seckillId'] as int?
-  ..bargainId = json['bargainId'] as int?
-  ..advanceId = json['advanceId'] as int?
-  ..status = json['status'] as int?
+  ..cartNum = (json['cartNum'] as num?)?.toInt()
+  ..addTime = (json['addTime'] as num?)?.toInt()
+  ..isPay = (json['isPay'] as num?)?.toInt()
+  ..isDel = (json['isDel'] as num?)?.toInt()
+  ..isNew = (json['isNew'] as num?)?.toInt()
+  ..combinationId = (json['combinationId'] as num?)?.toInt()
+  ..seckillId = (json['seckillId'] as num?)?.toInt()
+  ..bargainId = (json['bargainId'] as num?)?.toInt()
+  ..advanceId = (json['advanceId'] as num?)?.toInt()
+  ..status = (json['status'] as num?)?.toInt()
   ..productInfo = json['productInfo'] == null
       ? null
       : ProductInfoModel.fromJson(json['productInfo'] as Map<String, dynamic>)
   ..attrStatus = json['attrStatus'] as bool?
-  ..vipTruePrice = json['vipTruePrice'] as int?
+  ..vipTruePrice = (json['vipTruePrice'] as num?)?.toInt()
   ..costPrice = json['costPrice'] as String?
-  ..trueStock = json['trueStock'] as int?
-  ..truePrice = json['truePrice'] as int?
+  ..trueStock = (json['trueStock'] as num?)?.toInt()
+  ..truePrice = (json['truePrice'] as num?)?.toInt()
   ..sumPrice = json['sumPrice'] as String?
   ..priceType = json['priceType'] as String?
-  ..isValid = json['isValid'] as int?;
+  ..isValid = (json['isValid'] as num?)?.toInt();
 
 Map<String, dynamic> _$CartModelToJson(CartModel instance) => <String, dynamic>{
       'id': instance.id,
