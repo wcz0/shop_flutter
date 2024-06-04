@@ -8,12 +8,12 @@ import '/flavors/environment.dart';
 void main() {
   EnvConfig prodConfig = EnvConfig(
     appName: "Flutter Shop",
-    baseUrl: "https://api.github.com",
+    baseUrl: "hhttps://v5.crmeb.net/api",
     shouldCollectCrashLog: true,
   );
 
   BuildConfig.instantiate(
-    envType: Environment.PRODUCTION,
+    envType: Environment.production,
     envConfig: prodConfig,
   );
 

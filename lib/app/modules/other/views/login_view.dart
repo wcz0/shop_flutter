@@ -1,9 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:shop_flutter/api/auth.dart';
-import 'package:shop_flutter/config/bootstrap.dart';
-import 'package:shop_flutter/app/modules/common/copyright.dart';
+import 'package:get/get.dart';
+import 'package:shop_flutter/app/modules/other/auth.dart';
+import 'package:shop_flutter/app/modules/common/views/copyright.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -237,7 +236,7 @@ class _LoginRouteState extends State<LoginRoute> {
   _loginProcess(r) {
     if (r.data['status'] == 200) {
       Bootstrap.prefs!.setString('token', r.data['data']['token']);
-      GoRouter.of(context).pop();
+      Get.back();
     }
     if (r.data['status'] == 400) {
       _scaffoldMessenger(r.data['msg']);
@@ -294,7 +293,7 @@ class _LoginRouteState extends State<LoginRoute> {
                 SizedBox(
                   child: TextButton(
                     onPressed: () {
-                      GoRouter.of(context).pop(context);
+                      Get.back();
                     },
                     child: const Text('完成'),
                   ),

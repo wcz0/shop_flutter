@@ -27,15 +27,15 @@ abstract class BaseController extends GetxController {
   refreshPage(bool refresh) => _refreshController(refresh);
 
   //Controls page state
-  final _pageSateController = PageState.DEFAULT.obs;
+  final _pageSateController = PageState.default_.obs;
 
   PageState get pageState => _pageSateController.value;
 
   updatePageState(PageState state) => _pageSateController(state);
 
-  resetPageState() => _pageSateController(PageState.DEFAULT);
+  resetPageState() => _pageSateController(PageState.default_);
 
-  showLoading() => updatePageState(PageState.LOADING);
+  showLoading() => updatePageState(PageState.loading);
 
   hideLoading() => resetPageState();
 

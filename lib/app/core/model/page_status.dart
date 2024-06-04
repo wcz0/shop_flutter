@@ -12,6 +12,6 @@ class PageStatus {
     this.title = "",
     this.message = "",
     this.nextRoute = "",
-    this.pageState = PageState.DEFAULT,
+    this.pageState = PageState.default_,
   });
 }

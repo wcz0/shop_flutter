@@ -29,7 +29,7 @@ abstract class BaseView<Controller extends BaseController>
       child: Stack(
         children: [
           annotatedRegion(context),
-          Obx(() => controller.pageState == PageState.LOADING
+          Obx(() => controller.pageState == PageState.loading
               ? _showLoading()
               : Container()),
           Obx(() => controller.errorMessage.isNotEmpty
@@ -85,10 +85,7 @@ abstract class BaseView<Controller extends BaseController>
 
   void showToast(String message) {
     Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_SHORT,
-        timeInSecForIosWeb: 1
-    );
+        msg: message, toastLength: Toast.LENGTH_SHORT, timeInSecForIosWeb: 1);
   }
 
   Color pageBackgroundColor() {
