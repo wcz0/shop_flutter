@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:shop_flutter/flavors/environment.dart';
 
 import '/app/network/pretty_dio_logger.dart';
 import '/app/network/request_headers.dart';
@@ -14,7 +13,7 @@ class DioProvider {
   static final _prettyDioLogger = PrettyDioLogger(
       requestHeader: true,
       requestBody: true,
-      responseBody: BuildConfig.instance.environment == Environment.development,
+      responseBody: BuildConfig.instance.debug,
       responseHeader: false,
       error: true,
       compact: true,

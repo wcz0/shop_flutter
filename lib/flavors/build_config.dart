@@ -1,8 +1,7 @@
 import '/flavors/env_config.dart';
-import '/flavors/environment.dart';
 
 class BuildConfig {
-  late final Environment environment;
+  late final bool debug;
   late final EnvConfig config;
   bool _lock = false;
 
@@ -11,12 +10,12 @@ class BuildConfig {
   BuildConfig._internal();
 
   factory BuildConfig.instantiate({
-    required Environment envType,
+    required bool debug,
     required EnvConfig envConfig,
   }) {
     if (instance._lock) return instance;
 
-    instance.environment = envType;
+    instance.debug = debug;
     instance.config = envConfig;
     instance._lock = true;
 

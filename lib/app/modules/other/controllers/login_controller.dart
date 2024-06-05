@@ -26,7 +26,7 @@ class LoginController extends BaseController {
   final passwordControllerVisible = false.obs;
   final loginButtonDisabled = false.obs;
 
-  OverlayEntry? overlayEntry;
+  late OverlayEntry overlayEntry;
 
   final SharedPreferences _prefs = Get.find();
   final Auth auth = Get.find();

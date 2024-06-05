@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '/app/my_app.dart';
 import '/flavors/build_config.dart';
 import '/flavors/env_config.dart';
-import '/flavors/environment.dart';
 
-void main() {
+Future main() async {
+  await dotenv.load(fileName: ".env");
+
   EnvConfig prodConfig = EnvConfig(
-    appName: "Flutter Shop",
-    baseUrl: "hhttps://v5.crmeb.net/api",
+    appName: dotenv.env['APP_NAME']!,
+    baseUrl: dotenv.env['APP_URL']!,
     shouldCollectCrashLog: true,
   );
 
   BuildConfig.instantiate(
-    envType: Environment.production,
+    debug: dotenv.env['APP_DEBUG'] == "true" ? true : false,
     envConfig: prodConfig,
   );
 

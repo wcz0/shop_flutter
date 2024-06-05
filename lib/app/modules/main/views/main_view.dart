@@ -5,8 +5,11 @@ import 'package:shop_flutter/app/modules/home/views/home_view.dart';
 import 'package:shop_flutter/app/modules/main/controllers/main_controller.dart';
 import 'package:shop_flutter/app/modules/main/model/menu_code.dart';
 import 'package:shop_flutter/app/modules/main/views/bottom_nav_bar.dart';
+import 'package:shop_flutter/app/modules/other/views/login_view.dart';
 
 class MainView extends BaseView<MainController> {
+  MainView({super.key});
+
   @override
   PreferredSizeWidget? appBar(BuildContext context) => null;
 
@@ -30,15 +33,17 @@ class MainView extends BaseView<MainController> {
   Widget getPageOnSelectedMenu(MenuCode menuCode) {
     switch (menuCode) {
       case MenuCode.home:
-        return Container();
+        return homeView;
       case MenuCode.category:
+        return Container();
+      case MenuCode.message:
         return Container();
       case MenuCode.cart:
         return Container();
       case MenuCode.profile:
         return Container();
       default:
-        return Container();
+        return homeView;
     }
   }
 }

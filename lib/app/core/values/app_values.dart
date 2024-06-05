@@ -83,7 +83,7 @@ abstract class AppValues {
   static const double indicatorDefaultSize = 8;
   static const double indicatorShadowBlurRadius = 1;
   static const double indicatorShadowSpreadRadius = 0;
-  static const double appbarActionRippleRadius = 50;
+  static const double appBarActionRippleRadius = 50;
   static const double activeIndicatorSize = 8;
   static const double inactiveIndicatorSize = 10;
   static const double datePickerHeightOnIos = 270;

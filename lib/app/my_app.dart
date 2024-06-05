@@ -9,13 +9,13 @@ import 'package:shop_flutter/flavors/build_config.dart';
 import 'package:shop_flutter/flavors/env_config.dart';
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
-  _MyAppState createState() => _MyAppState();
+  MyAppState createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> {
   final EnvConfig _envConfig = BuildConfig.instance.config;
 
   @override
@@ -40,14 +40,14 @@ class _MyAppState extends State<MyApp> {
           )
         )
       ),
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: BuildConfig.instance.debug,
     );
   }
 
   List<Locale> _getSupportedLocal() {
     return const [
       Locale('en', ''),
-      Locale('zh', 'CN'),
+      Locale('zh', ''),
     ];
   }
 }
