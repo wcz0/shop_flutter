@@ -35,20 +35,24 @@ abstract class BaseController extends GetxController {
 
   resetPageState() => _pageSateController(PageState.default_);
 
+  // 显示loading
   showLoading() => updatePageState(PageState.loading);
 
+  // 隐藏loading
   hideLoading() => resetPageState();
 
   final _messageController = ''.obs;
 
   String get message => _messageController.value;
 
+  // 显示消息
   showMessage(String msg) => _messageController(msg);
 
   final _errorMessageController = ''.obs;
 
   String get errorMessage => _errorMessageController.value;
 
+  // 显示错误消息
   showErrorMessage(String msg) {
     _errorMessageController(msg);
   }
@@ -57,6 +61,7 @@ abstract class BaseController extends GetxController {
 
   String get successMessage => _messageController.value;
 
+  // 显示成功消息
   showSuccessMessage(String msg) => _successMessageController(msg);
 
   // ignore: long-parameter-list
@@ -67,7 +72,7 @@ abstract class BaseController extends GetxController {
     Function? onStart,
     Function? onComplete,
   }) async {
-    Exception? _exception;
+    Exception? exception_;
 
     onStart == null ? showLoading() : onStart();
 
@@ -80,34 +85,34 @@ abstract class BaseController extends GetxController {
 
       return response;
     } on ServiceUnavailableException catch (exception) {
-      _exception = exception;
+      exception_ = exception;
       showErrorMessage(exception.message);
     } on UnauthorizedException catch (exception) {
-      _exception = exception;
+      exception_ = exception;
       showErrorMessage(exception.message);
     } on TimeoutException catch (exception) {
-      _exception = exception;
+      exception_ = exception;
       showErrorMessage(exception.message ?? 'Timeout exception');
     } on NetworkException catch (exception) {
-      _exception = exception;
+      exception_ = exception;
       showErrorMessage(exception.message);
     } on JsonFormatException catch (exception) {
-      _exception = exception;
+      exception_ = exception;
       showErrorMessage(exception.message);
     } on NotFoundException catch (exception) {
-      _exception = exception;
+      exception_ = exception;
       showErrorMessage(exception.message);
     } on ApiException catch (exception) {
-      _exception = exception;
+      exception_ = exception;
     } on AppException catch (exception) {
-      _exception = exception;
+      exception_ = exception;
       showErrorMessage(exception.message);
     } catch (error) {
-      _exception = AppException(message: "$error");
+      exception_ = AppException(message: "$error");
       logger.e("Controller>>>>>> error $error");
     }
 
-    if (onError != null) onError(_exception);
+    if (onError != null) onError(exception_);
 
     onComplete == null ? hideLoading() : onComplete();
   }

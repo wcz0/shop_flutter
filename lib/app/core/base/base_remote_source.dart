@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
+import 'package:shop_flutter/app/network/exceptions/api_exception.dart';
 
 import '/app/network/dio_provider.dart';
 import '/app/network/error_handlers.dart';
@@ -11,17 +12,20 @@ abstract class BaseRemoteSource {
 
   final logger = BuildConfig.instance.config.logger;
 
-  Future<Response<T>> callApiWithErrorParser<T>(Future<Response<T>> api) async {
+  Future<T> callApiWithErrorParser<T>(Future<Response<T>> api) async {
     try {
       Response<T> response = await api;
 
-      if (response.statusCode != HttpStatus.ok ||
-          (response.data as Map<String, dynamic>)['statusCode'] !=
-              HttpStatus.ok) {
-        // TODO
+      Map<String, dynamic> data = response.data as Map<String, dynamic>;
+      if (response.statusCode != HttpStatus.ok || data['status'] != 0) {
+        throw ApiException(
+          httpCode: response.statusCode!,
+          status: data['status'] as String,
+          message: data['msg'],
+        );
       }
 
-      return response;
+      return data as T;
     } on DioException catch (dioError) {
       Exception exception = handleDioError(dioError);
       logger.e(

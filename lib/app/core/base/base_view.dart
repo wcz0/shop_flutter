@@ -15,6 +15,8 @@ abstract class BaseView<Controller extends BaseController>
     extends GetView<Controller> {
   final GlobalKey<ScaffoldState> globalKey = GlobalKey<ScaffoldState>();
 
+  BaseView({super.key});
+
   AppLocalizations get appLocalization => AppLocalizations.of(Get.context!)!;
 
   final Logger logger = BuildConfig.instance.config.logger;

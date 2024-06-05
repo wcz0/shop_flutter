@@ -7,7 +7,7 @@ import '/flavors/environment.dart';
 
 void main() {
   EnvConfig devConfig = EnvConfig(
-    appName: "Flutter Shop",
+    appName: "Flutter Shop Test",
     baseUrl: "https://v5.crmeb.net/api",
     shouldCollectCrashLog: true,
   );
