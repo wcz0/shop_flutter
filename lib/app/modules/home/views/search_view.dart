@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shop_flutter/app/core/base/base_view.dart';
 import 'package:shop_flutter/app/modules/home/controllers/home_controller.dart';
 
-class HomeView extends BaseView<HomeController> {
-  HomeView({super.key});
+class SearchView extends BaseView<HomeController> {
+  SearchView({super.key});
 
 
   @override
@@ -13,6 +13,4 @@ class HomeView extends BaseView<HomeController> {
   Widget body(BuildContext context) {
     return Container();
   }
-
-  
 }

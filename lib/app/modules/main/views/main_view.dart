@@ -5,7 +5,6 @@ import 'package:shop_flutter/app/modules/home/views/home_view.dart';
 import 'package:shop_flutter/app/modules/main/controllers/main_controller.dart';
 import 'package:shop_flutter/app/modules/main/model/menu_code.dart';
 import 'package:shop_flutter/app/modules/main/views/bottom_nav_bar.dart';
-import 'package:shop_flutter/app/modules/other/views/login_view.dart';
 
 class MainView extends BaseView<MainController> {
   MainView({super.key});

@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_flutter/app/core/base/base_controller.dart';
+import 'package:shop_flutter/app/data/local/preference/preference_manager.dart';
 import 'package:shop_flutter/app/data/model/other/login_response.dart';
 import 'package:shop_flutter/app/data/remote/other/auth.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -28,14 +28,14 @@ class LoginController extends BaseController {
 
   late OverlayEntry overlayEntry;
 
-  final SharedPreferences _prefs = Get.find();
+  final PreferenceManager pref = Get.find();
   final Auth auth = Get.find();
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
-    String? phone = _prefs.getString('last-phone');
-    if (phone != null) {
+    String phone = await pref.getString('last-phone');
+    if (phone == '') {
       phoneController.text = phone;
     }
     overlayEntry = OverlayEntry(
@@ -60,8 +60,8 @@ class LoginController extends BaseController {
       response = await auth.loginByPassword(
           phoneController.text, passwordController.text);
     }
-    _prefs.setString('token', response.token);
-    _prefs.setString('last-phone', phoneController.text);
+    pref.setString('token', response.token);
+    pref.setString('last-phone', phoneController.text);
     loginButtonDisabled.value = false;
     hideLoading();
   }

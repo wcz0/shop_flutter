@@ -52,6 +52,14 @@ dependencies:
   fluttertoast: ^8.2.5
   analyzer: ^6.4.1
   flutter_dotenv: ^5.1.0
+  bruno: ^3.4.3
+  easy_refresh: ^3.4.0
+  jiffy: ^6.3.1
+  money2: ^5.0.1
+
+
+dependency_overrides:
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

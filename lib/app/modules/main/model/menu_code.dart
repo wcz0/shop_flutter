@@ -39,36 +39,16 @@ extension MenuCodeExtension on MenuCode {
         );
       case MenuCode.profile:
         return BottomNavItem(
-          icon: Icon(Icons.person),
+          icon: const Icon(Icons.person),
           title: localizations.bottomNavProfile,
           menuCode: MenuCode.profile,
+        );
+      default:
+        return BottomNavItem(
+          title: localizations.bottomNavHome,
+          icon: const Icon(Icons.home),
+          menuCode: MenuCode.home,
         );
     }
   }
 }
-
-
-//     items: const [
-//       BottomNavigationBarItem(
-//         icon: Icon(Icons.home),
-//         label: '首页',
-//       ),
-//       BottomNavigationBarItem(
-//         icon: Icon(Icons.category),
-//         label: '分类',
-//       ),
-//       // BottomNavigationBarItem(
-//       //   icon: Icon(Icons.message),
-//       //   label: '消息',
-//       // ),
-//       BottomNavigationBarItem(
-//         icon: Icon(Icons.shopify_sharp),
-//         label: '购物车',
-//       ),
-//       BottomNavigationBarItem(
-//         icon: Icon(Icons.person),
-//         label: '我的',
-//       ),
-//     ],
-//   );
-// }
