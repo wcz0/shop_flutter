@@ -7,8 +7,6 @@ import 'package:shop_flutter/app/routes/app_routes.dart';
 class MainController extends BaseController {
   final _selectedMenuCodeController = MenuCode.home.obs;
 
-  // final PreferenceManager pref = Get.find();
-
   MenuCode get selectedMenuCode => _selectedMenuCodeController.value;
 
   // 菜单白名单
@@ -18,12 +16,11 @@ class MainController extends BaseController {
   ];
 
   onMenuSelected(MenuCode menuCode) async {
-    // String token = await pref.getString('token');
-    // if (token == '') {
-    //   if (!white.contains(menuCode)) {
-    //     Get.offAllNamed(Routes.login);
-    //   }
-    // }
+    final PreferenceManager pref = Get.find();
+    String token = await pref.getString('token');
+    if (token.isEmpty && !white.contains(menuCode)) {
+      Get.offNamed(Routes.login);
+    }
     _selectedMenuCodeController(menuCode);
   }
 }
