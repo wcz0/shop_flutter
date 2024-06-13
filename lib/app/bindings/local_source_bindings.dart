@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
-import 'package:shop_flutter/app/data/local/preference/preference_manager.dart';
-import 'package:shop_flutter/app/data/local/preference/preference_manager_impl.dart';
 
-class LocalSourceBindings extends Bindings {
+import '/app/data/local/preference/preference_manager.dart';
+import '/app/data/local/preference/preference_manager_impl.dart';
+
+class LocalSourceBindings implements Bindings {
   @override
   void dependencies() {
     Get.lazyPut<PreferenceManager>(

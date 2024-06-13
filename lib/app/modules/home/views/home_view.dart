@@ -11,8 +11,8 @@ class HomeView extends BaseView<HomeController> {
 
   @override
   Widget body(BuildContext context) {
-    return Container();
+    return const Text('HomeView');
   }
 
-  
+
 }
