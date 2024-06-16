@@ -28,13 +28,13 @@ class LoginController extends BaseController {
 
   late OverlayEntry overlayEntry;
 
-  final PreferenceManager pref = Get.find();
-  final Auth auth = Get.find();
+  final PreferenceManager _pref = Get.find(tag: (PreferenceManager).toString());
+  final Auth _auth = Get.find(tag: (Auth).toString());
 
   @override
   Future<void> onInit() async {
     super.onInit();
-    String phone = await pref.getString('last-phone');
+    String phone = await _pref.getString('last-phone');
     if (phone == '') {
       phoneController.text = phone;
     }
@@ -48,43 +48,37 @@ class LoginController extends BaseController {
   // 登录按钮点击事件
   Future<void> onLogin(BuildContext context) async {
     if (!checkBoxValue()) return;
+    bool isPhoneValid = phoneKey.currentState!.validate();
+    bool isPasswordValid = passwordKey.currentState?.validate() ?? false;
+    bool isCodeValid = codeKey.currentState?.validate() ?? false;
+    if (!isPhoneValid ||
+        (!isCodeValid && buttonLabel.value != '账号登录') ||
+        (!isPasswordValid && buttonLabel.value == '账号登录')) {
+      return;
+    }
+    // 显示加载状态
     showLoading();
     loginButtonDisabled.value = true;
     LoginResponse response;
-    if (buttonLabel.value != '账号登录') {
-      await _loginByCode();
-      response = await auth.loginByCode(
-          phoneController.text, codeController.text, '0');
-    } else {
-      await _loginByPassword();
-      response = await auth.loginByPassword(
-          phoneController.text, passwordController.text);
-    }
-    pref.setString('token', response.token);
-    pref.setString('last-phone', phoneController.text);
-    loginButtonDisabled.value = false;
-    hideLoading();
-  }
-
-  Future<void> _loginByPassword() async {
-    if (!phoneKey.currentState!.validate()) {
-      return;
-    }
-    if (!passwordKey.currentState!.validate()) {
-      return;
+    try {
+      if (buttonLabel.value != '账号登录') {
+        response = await _auth.loginByCode(
+            phoneController.text, codeController.text, '0');
+      } else {
+        response = await _auth.loginByPassword(
+            phoneController.text, passwordController.text);
+      }
+      _pref.setString('token', response.token);
+      _pref.setString('last-phone', phoneController.text);
+    } catch (e) {
+      scaffoldMessenger(e.toString());
+    } finally {
+      loginButtonDisabled.value = false;
+      hideLoading();
     }
   }
 
-  Future<void> _loginByCode() async {
-    if (!phoneKey.currentState!.validate()) {
-      return;
-    }
-    if (!codeKey.currentState!.validate()) {
-      return;
-    }
-  }
-
-  String phoneCheck(String? str) {
+  String? phoneCheck(String? str) {
     final RegExp phoneRegex = RegExp(r'^1[0-9]{10}$');
     // 去除首尾空格后判断是否为空
     if (str!.trim().isEmpty) {
@@ -94,7 +88,7 @@ class LoginController extends BaseController {
     if (!phoneRegex.hasMatch(str)) {
       return '请输入有效的手机号';
     }
-    return '';
+    return null;
   }
 
   // 切换密码登录和验证码登录
@@ -126,6 +120,7 @@ class LoginController extends BaseController {
   void sendCode(BuildContext context) {
     if (!checkBoxValue()) return;
     if (!phoneKey.currentState!.validate()) return;
+
     WebViewController webview = WebViewController()
       ..loadRequest(Uri.parse('https://v5.crmeb.net/pages/users/login/index'))
       ..setJavaScriptMode(JavaScriptMode.unrestricted);

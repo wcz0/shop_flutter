@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_flutter/app/core/base/base_view.dart';
+import 'package:shop_flutter/app/core/widget/custom_app_bar.dart';
 import 'package:shop_flutter/app/modules/common/views/copyright.dart';
 import 'package:shop_flutter/app/modules/other/controllers/login_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -10,7 +11,12 @@ class LoginView extends BaseView<LoginController> {
   LoginView({super.key});
 
   @override
-  PreferredSizeWidget? appBar(BuildContext context) => null;
+  PreferredSizeWidget? appBar(BuildContext context) {
+    return CustomAppBar(
+      appBarTitleText: '登录',
+      isBackButtonEnabled: true,
+    );
+  }
 
   @override
   Widget body(BuildContext context) {
@@ -99,11 +105,10 @@ class LoginView extends BaseView<LoginController> {
                   child: ConstrainedBox(
                     constraints: const BoxConstraints.expand(height: 55.0),
                     child: ElevatedButton(
-                      onPressed: controller.loginButtonDisabled.value
-                          ? null
-                          : () => controller.onLogin(context),
-                      child: const Text('登录'),
-                    ),
+                        onPressed: controller.loginButtonDisabled.value
+                            ? null
+                            : () => controller.onLogin(context),
+                        child: const Text('登录')),
                   ),
                 ),
                 Padding(
