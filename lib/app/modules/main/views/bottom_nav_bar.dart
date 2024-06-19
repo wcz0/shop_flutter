@@ -1,12 +1,11 @@
+import 'package:bruno/bruno.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_flutter/app/core/base/base_widget_mixin.dart';
-import 'package:shop_flutter/app/core/values/app_colors.dart';
 import 'package:shop_flutter/app/modules/main/controllers/bottom_nav_controller.dart';
 import 'package:shop_flutter/app/modules/main/model/menu_code.dart';
-import 'package:shop_flutter/app/modules/main/model/menu_item.dart';
 
-typedef OnBottomNavItemSelected = Function(MenuCode menuCode);
+typedef OnBottomNavItemSelected = Function(int index);
 
 class BottomNavBar extends StatelessWidget with BaseWidgetMixin {
   BottomNavBar({
@@ -22,53 +21,63 @@ class BottomNavBar extends StatelessWidget with BaseWidgetMixin {
 
   @override
   Widget body(BuildContext context) {
-    List<BottomNavItem> navItems = _getNavItems();
+    List<BrnBottomTabBarItem> navItems = _getNavItems();
 
     return Obx(
-      () => BottomNavigationBar(
-        key: bottomNavKey,
-        items: _navItemBuilder(navItems),
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: AppColors.colorAccent,
-        selectedItemColor: selectedItemColor,
-        unselectedItemColor: unselectedItemColor,
+      // () => BottomNavigationBar(
+      //   key: bottomNavKey,
+      //   items: _navItemBuilder(navItems),
+      //   showSelectedLabels: true,
+      //   showUnselectedLabels: true,
+      //   type: BottomNavigationBarType.fixed,
+      //   backgroundColor: AppColors.colorAccent,
+      //   selectedItemColor: selectedItemColor,
+      //   unselectedItemColor: unselectedItemColor,
+      //   currentIndex: navController.selectedIndex,
+      //   onTap: (index) {
+      //     navController.updateSelectedIndex(index);
+      //     onItemSelected(index);
+      //   },
+      // ),
+      () => BrnBottomTabBar(
+        items: navItems,
+        fixedColor: Colors.blue,
+        badgeColor: Colors.white,
         currentIndex: navController.selectedIndex,
         onTap: (index) {
           navController.updateSelectedIndex(index);
-          onItemSelected(navItems[index].menuCode);
+          onItemSelected(index);
         },
       ),
     );
   }
 
-  List<BottomNavigationBarItem> _navItemBuilder(List<BottomNavItem> navItems) {
-    return navItems
-        .map(
-          (BottomNavItem navItem) => _getBottomNavigationBarItem(
-            navItem,
-            navController.selectedIndex == navItems.indexOf(navItem),
-          ),
-        )
-        .toList();
-  }
+  // List<BottomNavigationBarItem> _navItemBuilder(List<BrnBottomTabBarItem> navItems) {
+  //   return navItems
+  //       .map(
+  //         (BrnBottomTabBarItem navItem) => _getBottomNavigationBarItem(
+  //           navItem,
+  //           navController.selectedIndex == navItems.indexOf(navItem),
+  //         ),
+  //       )
+  //       .toList();
+  // }
 
-  BottomNavigationBarItem _getBottomNavigationBarItem(
-    BottomNavItem navItem,
-    bool isSelected,
-  ) {
-    return BottomNavigationBarItem(
-      icon: navItem.icon,
-      label: navItem.title,
-      tooltip: navItem.title,
-    );
-  }
+  // BottomNavigationBarItem _getBottomNavigationBarItem(
+  //   BrnBottomTabBarItem navItem,
+  //   bool isSelected,
+  // ) {
+  //   return BottomNavigationBarItem(
+  //     icon: navItem.icon,
+  //     label: navItem.title,
+  //     tooltip: navItem.title,
+  //   );
+  // }
 
-  List<BottomNavItem> _getNavItems() {
+  List<BrnBottomTabBarItem> _getNavItems() {
     return MenuCode.values
         .map(
-          (menuCode) => menuCode.toBottomNavItem(appLocalization),
+          (menuCode) => menuCode.toBrnBottomTabBarItem(appLocalization),
         )
         .toList();
   }

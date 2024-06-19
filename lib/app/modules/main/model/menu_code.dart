@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shop_flutter/app/modules/main/model/menu_item.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:bruno/bruno.dart';
+
 
 enum MenuCode {
   home,
@@ -11,43 +12,37 @@ enum MenuCode {
 }
 
 extension MenuCodeExtension on MenuCode {
-  BottomNavItem toBottomNavItem(AppLocalizations localizations) {
+  BrnBottomTabBarItem toBrnBottomTabBarItem(AppLocalizations localizations) {
     switch (this) {
       case MenuCode.home:
-        return BottomNavItem(
-          title: localizations.bottomNavHome,
+        return BrnBottomTabBarItem(
+          title: Text(localizations.bottomNavHome),
           icon: const Icon(Icons.home),
-          menuCode: MenuCode.home,
         );
       case MenuCode.category:
-        return BottomNavItem(
-          title: localizations.bottomNavCategory,
+        return BrnBottomTabBarItem(
+          title: Text(localizations.bottomNavCategory),
           icon: const Icon(Icons.category),
-          menuCode: MenuCode.category,
         );
       case MenuCode.message:
-        return BottomNavItem(
-          title: localizations.bottomNavMessage,
+        return BrnBottomTabBarItem(
+          title: Text(localizations.bottomNavMessage),
           icon: const Icon(Icons.message),
-          menuCode: MenuCode.message,
         );
       case MenuCode.cart:
-        return BottomNavItem(
-          title: localizations.bottomNavCart,
+        return BrnBottomTabBarItem(
+          title: Text(localizations.bottomNavCart),
           icon: const Icon(Icons.shop),
-          menuCode: MenuCode.cart,
         );
       case MenuCode.profile:
-        return BottomNavItem(
+        return BrnBottomTabBarItem(
           icon: const Icon(Icons.person),
-          title: localizations.bottomNavProfile,
-          menuCode: MenuCode.profile,
+          title: Text(localizations.bottomNavProfile),
         );
       default:
-        return BottomNavItem(
-          title: localizations.bottomNavHome,
+        return BrnBottomTabBarItem(
+          title: Text(localizations.bottomNavHome),
           icon: const Icon(Icons.home),
-          menuCode: MenuCode.home,
         );
     }
   }

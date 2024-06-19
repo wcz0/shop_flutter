@@ -41,7 +41,9 @@ class AppPages {
       name: Routes.profile,
       page: () => ProfileView(),
       binding: ProfileBinding(),
-      middlewares: [AuthMiddleware()],
+      middlewares: [
+        AuthMiddleware(),
+      ],
     ),
     GetPage(
       name: Routes.category,
@@ -58,7 +60,9 @@ class AppPages {
       name: Routes.message,
       page: () => MessageView(),
       binding: MessageBinding(),
-      middlewares: [AuthMiddleware()],
+      middlewares: [
+        AuthMiddleware(),
+      ],
     ),
   ];
 }
