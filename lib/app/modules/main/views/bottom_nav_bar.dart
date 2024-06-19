@@ -44,9 +44,10 @@ class BottomNavBar extends StatelessWidget with BaseWidgetMixin {
         fixedColor: Colors.blue,
         badgeColor: Colors.white,
         currentIndex: navController.selectedIndex,
-        onTap: (index) {
-          navController.updateSelectedIndex(index);
-          onItemSelected(index);
+        onTap: (index) async {
+          if (await onItemSelected(index)) {
+            navController.updateSelectedIndex(index);
+          }
         },
       ),
     );

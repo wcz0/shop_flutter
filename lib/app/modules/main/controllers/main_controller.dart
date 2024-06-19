@@ -9,7 +9,7 @@ class MainController extends BaseController {
 
   MenuCode get selectedMenuCode => _selectedMenuCodeController.value;
 
-  onMenuSelected(int index) async {
+  Future<bool> onMenuSelected(int index) async {
     switch (index) {
       case 0:
         _selectedMenuCodeController(MenuCode.home);
@@ -18,22 +18,29 @@ class MainController extends BaseController {
         _selectedMenuCodeController(MenuCode.category);
         break;
       case 2:
-        if (await _isLogin()) _selectedMenuCodeController(MenuCode.message);
-        break;
+        if (await _isLogin()) {
+          _selectedMenuCodeController(MenuCode.message);
+        }
+        return false;
       case 3:
-        if (await _isLogin()) _selectedMenuCodeController(MenuCode.cart);
-        break;
+        if (await _isLogin()){
+          _selectedMenuCodeController(MenuCode.cart);
+        }
+        return false;
       case 4:
-        if (await _isLogin()) _selectedMenuCodeController(MenuCode.profile);
-        break;
+        if (await _isLogin()){
+          _selectedMenuCodeController(MenuCode.profile);
+        }
+        return false;
     }
+    return true;
   }
 
   Future<bool> _isLogin() async {
     var pref = Get.find<PreferenceManager>(tag: (PreferenceManager).toString());
     String token = await pref.getString(PreferenceManager.keyToken);
     if (token.isEmpty) {
-      Get.offNamed(Routes.login);
+      Get.toNamed(Routes.login);
       return false;
     }
     return true;

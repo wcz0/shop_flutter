@@ -11,6 +11,7 @@ class OtherBinding extends Bindings {
     );
     Get.lazyPut<LoginController>(
       () => LoginController(),
+      fenix: true,
     );
   }
 }

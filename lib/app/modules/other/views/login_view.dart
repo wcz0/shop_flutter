@@ -2,7 +2,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_flutter/app/core/base/base_view.dart';
-import 'package:shop_flutter/app/core/widget/custom_app_bar.dart';
 import 'package:shop_flutter/app/modules/common/views/copyright.dart';
 import 'package:shop_flutter/app/modules/other/controllers/login_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -11,12 +10,12 @@ class LoginView extends BaseView<LoginController> {
   LoginView({super.key});
 
   @override
-  PreferredSizeWidget? appBar(BuildContext context) {
-    return CustomAppBar(
-      appBarTitleText: '登录',
-      isBackButtonEnabled: true,
-    );
-  }
+  // PreferredSizeWidget? appBar(BuildContext context) {
+  //   return BrnAppBar(
+  //     title: '登录',
+  //   );
+  // }
+  PreferredSizeWidget? appBar(BuildContext context) => null;
 
   @override
   Widget body(BuildContext context) {
@@ -43,18 +42,6 @@ class LoginView extends BaseView<LoginController> {
                     controller.phone.value = v;
                   },
                   validator: (str) => controller.phoneCheck(str),
-                  // validator: (v) {
-                  //   final RegExp phoneRegex = RegExp(r'^1[0-9]{10}$');
-                  //   // 去除首尾空格后判断是否为空
-                  //   if (v!.trim().isEmpty) {
-                  //     return '手机号不能为空';
-                  //   }
-                  //   // 判断是否符合手机号格式
-                  //   if (!phoneRegex.hasMatch(v)) {
-                  //     return '请输入有效的手机号';
-                  //   }
-                  //   return null;
-                  // },
                 ),
                 Obx(() => Visibility(
                       visible: controller.passwordControllerVisible.value,

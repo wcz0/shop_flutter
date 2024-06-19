@@ -29,7 +29,7 @@ class LoginController extends BaseController {
   late OverlayEntry overlayEntry;
 
   final PreferenceManager _pref = Get.find(tag: (PreferenceManager).toString());
-  final Auth _auth = Get.find(tag: (Auth).toString());
+  final _auth = Get.find<Auth>(tag: (Auth).toString());
 
   @override
   Future<void> onInit() async {

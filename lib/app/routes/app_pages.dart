@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:shop_flutter/app/core/middlewares/auth_middleware.dart';
 import 'package:shop_flutter/app/modules/cart/bindings/cart_binding.dart';
 import 'package:shop_flutter/app/modules/cart/views/cart_view.dart';
 import 'package:shop_flutter/app/modules/category/bindings/category_binding.dart';
@@ -41,9 +40,6 @@ class AppPages {
       name: Routes.profile,
       page: () => ProfileView(),
       binding: ProfileBinding(),
-      middlewares: [
-        AuthMiddleware(),
-      ],
     ),
     GetPage(
       name: Routes.category,
@@ -54,15 +50,11 @@ class AppPages {
       name: Routes.cart,
       page: () => CartView(),
       binding: CartBinding(),
-      middlewares: [AuthMiddleware()],
     ),
     GetPage(
       name: Routes.message,
       page: () => MessageView(),
       binding: MessageBinding(),
-      middlewares: [
-        AuthMiddleware(),
-      ],
     ),
   ];
 }
