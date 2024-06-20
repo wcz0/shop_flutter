@@ -11,6 +11,18 @@ class SearchView extends BaseView<HomeController> {
 
   @override
   Widget body(BuildContext context) {
-    return Container();
+    return ;
+  }
+
+
+
+  Widget content(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          HomeSearchBarWidget(),
+        ],
+      ),
+    );
   }
 }
