@@ -8,13 +8,6 @@ class HomeSearchBarWidget extends StatelessWidget with BaseWidgetMixin {
   @override
   Widget body(BuildContext context) {
     return BrnAppBar(
-      // leading: const Text(
-      //   '电商',
-      //   style: TextStyle(
-      //     fontSize: 14.0,
-      //   ),
-
-      // ),
       leading: const Center(
         child: Text(
           '电商',

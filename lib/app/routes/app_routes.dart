@@ -1,6 +1,8 @@
 abstract class Routes {
   static const main = '/main';
   static const home = '/home';
+  static const homeSearch = '/home/search';
+
   static const category = '/category';
   static const message = '/message';
   static const messageDetail = '/message/:id';

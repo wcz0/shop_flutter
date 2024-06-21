@@ -16,13 +16,4 @@ class SearchView extends BaseView<HomeController> {
 
 
 
-  Widget content(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          HomeSearchBarWidget(),
-        ],
-      ),
-    );
-  }
 }
