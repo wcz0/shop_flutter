@@ -80,7 +80,12 @@ class LoginView extends BaseView<LoginController> {
                           prefixIcon: const Icon(Icons.message),
                           suffixIcon: TextButton(
                             onPressed: () => controller.sendCode(context),
-                            child: const Text('验证码'),
+                            child: const Text(
+                              '验证码',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                              ),
+                            ),
                           ),
                         ),
                         validator: (value) =>
@@ -111,45 +116,48 @@ class LoginView extends BaseView<LoginController> {
                         ),
                       ),
                     )),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Obx(() => Checkbox(
-                        value: controller.checkBox.value,
-                        onChanged: (bool? value) {
-                          controller.checkBox.value = value!;
-                        },
-                      )),
-                  RichText(
-                    text: TextSpan(
-                        style:
-                            const TextStyle(color: Colors.grey, fontSize: 12),
-                        children: [
-                          const TextSpan(
-                            text: '已阅读并同意',
-                          ),
-                          TextSpan(
-                            text: '《用户协议》',
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                launchUrl(Uri.parse(
-                                    'https://v5.crmeb.net/pages/users/privacy/index?type=4'));
-                              },
-                          ),
-                          const TextSpan(text: '和'),
-                          TextSpan(
-                            text: '《隐私协议》',
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                launchUrl(Uri.parse(
-                                    'https://v5.crmeb.net/pages/users/privacy/index?type=3'));
-                              },
-                          ),
-                        ]),
-                  ),
-                ]),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Obx(() => Checkbox(
+                          value: controller.checkBox.value,
+                          onChanged: (bool? value) {
+                            controller.checkBox.value = value!;
+                          },
+                        )),
+                    RichText(
+                      text: TextSpan(
+                          style:
+                              const TextStyle(color: Colors.grey, fontSize: 12),
+                          children: [
+                            const TextSpan(
+                              text: '已阅读并同意',
+                            ),
+                            TextSpan(
+                              text: '《用户协议》',
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  launchUrl(Uri.parse(
+                                      'https://v5.crmeb.net/pages/users/privacy/index?type=4'));
+                                },
+                            ),
+                            const TextSpan(text: '和'),
+                            TextSpan(
+                              text: '《隐私协议》',
+                              style: TextStyle(
+                                  color: Theme.of(context).primaryColor),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  launchUrl(Uri.parse(
+                                      'https://v5.crmeb.net/pages/users/privacy/index?type=3'));
+                                },
+                            ),
+                          ]),
+                    ),
+                  ],
+                ),
                 ...buildCopyRight(),
               ],
             ),

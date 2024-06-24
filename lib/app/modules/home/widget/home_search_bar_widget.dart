@@ -1,6 +1,8 @@
 import 'package:bruno/bruno.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shop_flutter/app/core/base/base_widget_mixin.dart';
+import 'package:shop_flutter/app/routes/app_routes.dart';
 
 class HomeSearchBarWidget extends StatelessWidget with BaseWidgetMixin {
   HomeSearchBarWidget({super.key});
@@ -20,7 +22,7 @@ class HomeSearchBarWidget extends StatelessWidget with BaseWidgetMixin {
           padding: const EdgeInsets.all(16.0),
           child: GestureDetector(
             onTap: () {
-              print('Search');
+              Get.toNamed(Routes.homeSearch);
             },
             child: Container(
               padding: const EdgeInsets.all(8.0),

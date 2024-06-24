@@ -7,5 +7,5 @@ class UnauthorizedException extends BaseApiException {
       : super(
             httpCode: HttpStatus.unauthorized,
             message: message,
-            status: "unauthorized");
+            status: 401);
 }

@@ -4,6 +4,7 @@ part 'search_product_response.g.dart';
 
 @JsonSerializable()
 class SearchProductResponse {
+
   int? id;
   String? storeName;
   String? cateId;

@@ -12,20 +12,21 @@ abstract class BaseRemoteSource {
 
   final logger = BuildConfig.instance.config.logger;
 
+  // 请求处理
   Future<T> callApiWithErrorParser<T>(Future<Response<T>> api) async {
     try {
       Response<T> response = await api;
 
       Map<String, dynamic> data = response.data as Map<String, dynamic>;
-      if (response.statusCode != HttpStatus.ok || data['status'] != 0) {
+      if (response.statusCode != HttpStatus.ok && data['status'] != 200) {
         throw ApiException(
           httpCode: response.statusCode!,
-          status: data['status'] as String,
+          status: data['status'],
           message: data['msg'],
         );
       }
 
-      return data as T;
+      return data['data'] as T;
     } on DioException catch (dioError) {
       Exception exception = handleDioError(dioError);
       logger.e(

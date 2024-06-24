@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:shop_flutter/app/modules/home/controllers/home_controller.dart';
+import 'package:shop_flutter/app/modules/home/controllers/search_controller.dart';
 
 class HomeBinding extends Bindings {
   @override
@@ -8,5 +9,10 @@ class HomeBinding extends Bindings {
       () => HomeController(),
       fenix: true,
     );
+    Get.lazyPut<SearchController>(
+      () => SearchController(),
+      fenix: true,
+    );
   }
+
 }

@@ -5,6 +5,7 @@ import 'package:shop_flutter/app/modules/category/bindings/category_binding.dart
 import 'package:shop_flutter/app/modules/category/views/category_view.dart';
 import 'package:shop_flutter/app/modules/home/bindings/home_binding.dart';
 import 'package:shop_flutter/app/modules/home/views/home_view.dart';
+import 'package:shop_flutter/app/modules/home/views/search_view.dart';
 import 'package:shop_flutter/app/modules/main/bindings/main_binding.dart';
 import 'package:shop_flutter/app/modules/main/views/main_view.dart';
 import 'package:shop_flutter/app/modules/message/bindings/message_binding.dart';
@@ -29,6 +30,11 @@ class AppPages {
     GetPage(
       name: Routes.home,
       page: () => HomeView(),
+      binding: HomeBinding(),
+    ),
+    GetPage(
+      name: Routes.homeSearch,
+      page: () => SearchView(),
       binding: HomeBinding(),
     ),
     GetPage(

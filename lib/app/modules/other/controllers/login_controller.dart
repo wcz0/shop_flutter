@@ -51,10 +51,14 @@ class LoginController extends BaseController {
     bool isPhoneValid = phoneKey.currentState!.validate();
     bool isPasswordValid = passwordKey.currentState?.validate() ?? false;
     bool isCodeValid = codeKey.currentState?.validate() ?? false;
-    if (!isPhoneValid ||
-        (!isCodeValid && buttonLabel.value != '账号登录') ||
-        (!isPasswordValid && buttonLabel.value == '账号登录')) {
-      return;
+    if (buttonLabel.value == '账号登录') {
+      if (!isPhoneValid || !isCodeValid) {
+        return;
+      }
+    } else {
+      if (!isPhoneValid || !isPasswordValid) {
+        return;
+      }
     }
     // 显示加载状态
     showLoading();
@@ -62,11 +66,11 @@ class LoginController extends BaseController {
     LoginResponse response;
     try {
       if (buttonLabel.value != '账号登录') {
-        response = await _auth.loginByCode(
-            phoneController.text, codeController.text, '0');
-      } else {
         response = await _auth.loginByPassword(
             phoneController.text, passwordController.text);
+      } else {
+        response = await _auth.loginByCode(
+            phoneController.text, codeController.text, '0');
       }
       _pref.setString('token', response.token);
       _pref.setString('last-phone', phoneController.text);
@@ -117,54 +121,64 @@ class LoginController extends BaseController {
     );
   }
 
+  // 显示安全验证
   void sendCode(BuildContext context) {
     if (!checkBoxValue()) return;
     if (!phoneKey.currentState!.validate()) return;
 
-    WebViewController webview = WebViewController()
-      ..loadRequest(Uri.parse('https://v5.crmeb.net/pages/users/login/index'))
-      ..setJavaScriptMode(JavaScriptMode.unrestricted);
-    showDialog(
-        context: context,
-        builder: (context) {
-          return Dialog(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: 300,
-                  child: WebViewWidget(
-                    controller: webview,
-                  ),
-                ),
-                SizedBox(
-                  child: TextButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    child: const Text('完成'),
-                  ),
-                ),
-              ],
-            ),
-          );
-        });
+    final WebViewController webviewController = WebViewController();
 
-    double width = MediaQuery.of(context).size.width;
-    int htmlWidth = (width * 8 ~/ 10).toInt();
-    webview.runJavaScript('''
-      var v = document.getElementsByClassName('verifybox')[0];
-      v.style.maxWidth = '${htmlWidth}px';
-      var img = document.getElementsByClassName('verify-image-panel')[0];
-      img.style = '${htmlWidth}px; height: 155px; margin-bottom: 5px;';
-      var bar = document.getElementsByClassName('verify-bar-area')[0];
-      bar.style = 'width: ${htmlWidth - 25}px; color: rgb(0, 0, 0); border-color: rgb(221, 221, 221); line-height: 40px';
-      var input = document.getElementsByClassName('uni-input-input')[0];
-      input.value = '${phoneController.text}';
-      input.dispatchEvent(new Event('input'));
-      document.getElementsByClassName('uni-checkbox-input')[0].click();
-      document.getElementsByTagName('uni-button')[0].click()
-    ''');
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: 300,
+                child: WebViewWidget(
+                  controller: webviewController,
+                ),
+              ),
+              SizedBox(
+                child: TextButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  child: const Text('完成'),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    webviewController
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onPageFinished: (String url) {
+            double width = MediaQuery.of(context).size.width;
+            int htmlWidth = (width * 8 ~/ 10).toInt();
+            webviewController.runJavaScript('''
+              var v = document.getElementsByClassName('verifybox')[0];
+              v.style.maxWidth = '${htmlWidth}px';
+              var img = document.getElementsByClassName('verify-image-panel')[0];
+              img.style = '${htmlWidth}px; height: 155px; margin-bottom: 5px;';
+              var bar = document.getElementsByClassName('verify-bar-area')[0];
+              bar.style = 'width: ${htmlWidth - 25}px; color: rgb(0, 0, 0); border-color: rgb(221, 221, 221); line-height: 40px';
+              var input = document.getElementsByClassName('uni-input-input')[0];
+              input.value = '${phoneController.text}';
+              input.dispatchEvent(new Event('input'));
+              document.getElementsByClassName('uni-checkbox-input')[0].click();
+              document.getElementsByTagName('uni-button')[0].click()
+            ''');
+          },
+        ),
+      )
+      ..loadRequest(Uri.parse('https://v5.crmeb.net/pages/users/login/index'));
   }
 }

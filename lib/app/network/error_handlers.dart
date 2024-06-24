@@ -42,12 +42,12 @@ Exception _parseDioErrorResponse(DioException dioError) {
   final logger = BuildConfig.instance.config.logger;
 
   int statusCode = dioError.response?.statusCode ?? -1;
-  String? status;
+  int? status;
   String? serverMessage;
 
   try {
     if (statusCode == -1 || statusCode == HttpStatus.ok) {
-      statusCode = dioError.response?.data["statusCode"];
+      statusCode = dioError.response?.data["statusCode"] as int;
     }
     status = dioError.response?.data["status"];
     serverMessage = dioError.response?.data["message"];
@@ -62,11 +62,11 @@ Exception _parseDioErrorResponse(DioException dioError) {
     case HttpStatus.serviceUnavailable:
       return ServiceUnavailableException("Service Temporarily Unavailable");
     case HttpStatus.notFound:
-      return NotFoundException(serverMessage ?? "", status ?? "");
+      return NotFoundException(serverMessage ?? "", status ?? 500);
     default:
       return ApiException(
           httpCode: statusCode,
-          status: status ?? "",
+          status: status ?? 500 ,
           message: serverMessage ?? "");
   }
 }
