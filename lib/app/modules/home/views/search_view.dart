@@ -1,8 +1,11 @@
 import 'package:bruno/bruno.dart';
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart' hide SearchController;
 import 'package:get/get.dart';
 import 'package:shop_flutter/app/core/base/base_view.dart';
+import 'package:shop_flutter/app/core/utils/tools.dart';
 import 'package:shop_flutter/app/modules/home/controllers/search_controller.dart';
+import 'package:shop_flutter/app/modules/home/widget/search_product_item_widget.dart';
 
 class SearchView extends BaseView<SearchController> {
   SearchView({super.key});
@@ -57,12 +60,13 @@ class SearchView extends BaseView<SearchController> {
                       fontSize: 14.0,
                     ),
                     onSubmitted: (text) => controller.onSearch(),
+                    onChanged: (text) => controller.onTextClear(),
                   ),
                 ),
               ),
               TextButton(
                 onPressed: () {
-                  controller.onSearch();
+                  Tools.debounce(controller.onSearch);
                 },
                 child: const Text(
                   '搜索',
@@ -83,18 +87,15 @@ class SearchView extends BaseView<SearchController> {
               child: Text('暂无数据'),
             );
           }
-          return ListView.builder(
-            itemCount: controller.searchResult.length,
-            itemBuilder: (context, index) {
-              final item = controller.searchResult[index];
-              return ListTile(
-                title: Text(item.title),
-                subtitle: Text('价格: \$${item.price} 数量: ${item.quantity}'),
-                leading: item.image != null
-                    ? Image.network(item.image)
-                    : const Icon(Icons.image),
-              );
-            },
+          return EasyRefresh(
+            onLoad: controller.onLoad,
+            child: ListView.builder(
+              itemCount: controller.searchResult.length,
+              itemBuilder: (context, index) {
+                final item = controller.searchResult[index];
+                return SearchProductItemWidget(model: item);
+              },
+            ),
           );
         }))
       ],

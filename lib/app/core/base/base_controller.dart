@@ -64,6 +64,7 @@ abstract class BaseController extends GetxController {
   // 显示成功消息
   showSuccessMessage(String msg) => _successMessageController(msg);
 
+  // api 请求
   // ignore: long-parameter-list
   dynamic callDataService<T>(
     Future<T> future, {
@@ -73,6 +74,7 @@ abstract class BaseController extends GetxController {
     Function? onComplete,
   }) async {
     Exception? exception_;
+    StackTrace? stackTrace_;
 
     onStart == null ? showLoading() : onStart();
 
@@ -107,9 +109,11 @@ abstract class BaseController extends GetxController {
     } on AppException catch (exception) {
       exception_ = exception;
       showErrorMessage(exception.message);
-    } catch (error) {
+    } catch (error, stackTrace) {
       exception_ = AppException(message: "$error");
-      logger.e("Controller>>>>>> error $error");
+      stackTrace_ = stackTrace;
+      logger.e("Controller>>>>>> error: $error");
+      logger.e("Controller>>>>>> trace: $stackTrace_");
     }
 
     if (onError != null) onError(exception_);

@@ -17,4 +17,6 @@ class HomeView extends BaseView<HomeController> {
       ],
     );
   }
+
+  
 }

@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:shop_flutter/app/modules/home/model/product_info.dart';
 import 'package:shop_flutter/app/modules/other/user.dart';
 
 part 'cart.g.dart';
@@ -22,7 +21,6 @@ class CartModel {
   int? bargainId;
   int? advanceId;
   int? status;
-  ProductInfoModel? productInfo;
   bool? attrStatus;
   int? vipTruePrice;
   String? costPrice;

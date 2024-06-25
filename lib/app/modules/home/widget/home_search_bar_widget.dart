@@ -28,7 +28,7 @@ class HomeSearchBarWidget extends StatelessWidget with BaseWidgetMixin {
               padding: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(8.0),
+                borderRadius: BorderRadius.circular(20.0),
               ),
               child: const Row(
                 children: [
@@ -45,7 +45,7 @@ class HomeSearchBarWidget extends StatelessWidget with BaseWidgetMixin {
             ),
           )),
       titleAlignment: Alignment.centerLeft,
-      backgroundColor: Colors.red,
+      backgroundColor: Color.fromARGB(255, 247, 96, 85),
     );
   }
 }

@@ -2,6 +2,7 @@ class SearchProductParam {
   String keyword;
   int page;
   int limit;
+
   SearchProductParam({
     required this.keyword,
     required this.page,

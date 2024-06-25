@@ -22,9 +22,6 @@ CartModel _$CartModelFromJson(Map<String, dynamic> json) => CartModel()
   ..bargainId = (json['bargainId'] as num?)?.toInt()
   ..advanceId = (json['advanceId'] as num?)?.toInt()
   ..status = (json['status'] as num?)?.toInt()
-  ..productInfo = json['productInfo'] == null
-      ? null
-      : ProductInfoModel.fromJson(json['productInfo'] as Map<String, dynamic>)
   ..attrStatus = json['attrStatus'] as bool?
   ..vipTruePrice = (json['vipTruePrice'] as num?)?.toInt()
   ..costPrice = json['costPrice'] as String?
@@ -50,7 +47,6 @@ Map<String, dynamic> _$CartModelToJson(CartModel instance) => <String, dynamic>{
       'bargainId': instance.bargainId,
       'advanceId': instance.advanceId,
       'status': instance.status,
-      'productInfo': instance.productInfo,
       'attrStatus': instance.attrStatus,
       'vipTruePrice': instance.vipTruePrice,
       'costPrice': instance.costPrice,

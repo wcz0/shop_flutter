@@ -3,7 +3,7 @@
 import 'dart:async';
 
 class Tools {
-  static const deFaultDurationTime = 300;
+  static const deFaultDurationTime = 500;
   static Timer? timer;
 
   // 防抖函数
