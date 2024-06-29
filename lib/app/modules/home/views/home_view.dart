@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper_view/flutter_swiper_view.dart';
 import 'package:shop_flutter/app/core/base/base_view.dart';
 import 'package:shop_flutter/app/modules/home/controllers/home_controller.dart';
 import 'package:shop_flutter/app/modules/home/widget/home_search_bar_widget.dart';
@@ -14,9 +15,12 @@ class HomeView extends BaseView<HomeController> {
     return Column(
       children: [
         HomeSearchBarWidget(),
+        swiper(context),
       ],
     );
   }
 
-  
+  Widget swiper(BuildContext context) {
+    return Swiper(itemCount: 1);
+  }
 }

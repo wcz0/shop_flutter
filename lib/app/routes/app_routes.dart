@@ -15,6 +15,6 @@ abstract class Routes {
   static const balance = '/balance';
   static const login = '/login';
 
-  static const product = '/product';
+  static const product = '/product/:id';
 
 }
